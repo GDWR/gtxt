@@ -8,6 +8,10 @@
 
 const char *FONT_PATH = "./assets/JetBrainsMono-Regular.ttf";
 
+void App::quit() {
+    this->running = false;
+}
+
 AppInitCode App::init() {
 
     // Initialize SDL2
@@ -56,6 +60,9 @@ AppInitCode App::init() {
         return AppInitCode::Error;
     }
 
+
+    this->onPressQ = [this]() { this->quit(); };
+
     return AppInitCode::Ok;
 }
 
@@ -72,6 +79,7 @@ void App::deinit() {
 
 
 void App::run() {
+    this->running = true;
     uint fontsize = 24;
     bool display_cursor = false;
     SDL_AddTimer(333, [](Uint32 interval, void *param) {
@@ -80,8 +88,7 @@ void App::run() {
         return interval;
     }, &display_cursor);
 
-    bool running = true;
-    while (running) {
+    while (this->running) {
         // Sync window height and width
         SDL_GetWindowSize(window, &width, &height);
 
@@ -90,7 +97,10 @@ void App::run() {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
-            } else if (event.type == SDL_KEYDOWN) {
+                break;
+            }
+
+            if (event.type == SDL_KEYDOWN) {
                 char key = event.key.keysym.sym;
                 if (event.key.keysym.mod & KMOD_SHIFT) {
 
@@ -152,7 +162,11 @@ void App::run() {
 
                 int i;
                 switch (event.key.keysym.scancode) {
-                    case SDL_SCANCODE_A...SDL_SCANCODE_Z:
+                    case SDL_SCANCODE_Q:
+                        this->onPressQ();
+                        break;
+                    case SDL_SCANCODE_A...SDL_SCANCODE_P:
+                    case SDL_SCANCODE_R...SDL_SCANCODE_Z:
                     case SDL_SCANCODE_1...SDL_SCANCODE_0:
                     case SDL_SCANCODE_TAB...SDL_SCANCODE_SLASH:
                         content.insert(cursor_position, &key);
@@ -284,3 +298,7 @@ void App::save_file() {
     file_stream.close();
 }
 
+App::App(int height, int width) {
+    this->height = height;
+    this->width = width;
+}

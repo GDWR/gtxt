@@ -9,19 +9,16 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    App app{
-        .width = 640,
-        .height = 640,
-    };
+    App *app = new App(640, 640);
 
-    if (app.init()) {
+    if (app->init()) {
         std::cout << "Application initialization failed " << std::endl;
         return 1;
     }
 
-    app.load_file(argv[1]);
-    app.run();
-    app.deinit();
+    app->load_file(argv[1]);
+    app->run();
+    app->deinit();
 
     return EXIT_SUCCESS;
 }

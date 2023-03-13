@@ -4,6 +4,7 @@
 #include <string>
 #include <SDL.h>
 #include <ft2build.h>
+#include <functional>
 #include FT_FREETYPE_H
 
 enum AppInitCode {
@@ -12,6 +13,8 @@ enum AppInitCode {
 };
 
 class App {
+    bool running;
+
     public:
         int width, height, cursor_position;
         std::string content, filepath;
@@ -22,6 +25,10 @@ class App {
         FT_Library library;
         FT_Face face;
 
+        std::function<void()> onPressQ;
+
+        App(int, int);
+
         AppInitCode init();
 
         void deinit();
@@ -31,6 +38,8 @@ class App {
         void save_file();
 
         void run();
+
+        void quit();
 };
 
 
