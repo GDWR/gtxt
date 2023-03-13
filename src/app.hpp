@@ -12,27 +12,25 @@ enum AppInitCode {
 };
 
 class App {
-public:
-    uint width, height, cursor_position;
-    std::string content, filepath;
+    public:
+        uint width, height, cursor_position;
+        std::string content, filepath;
 
-    SDL_Renderer *renderer;
-    SDL_Window *window;
+        SDL_Renderer *renderer;
+        SDL_Window *window;
 
-    FT_Library library;
-    FT_Face face;
+        FT_Library library;
+        FT_Face face;
 
-    explicit App(uint width, uint height) : width(width), height(height) {}
+        AppInitCode init();
 
-    AppInitCode init();
+        void deinit();
 
-    void deinit();
+        void load_file(std::string fp);
 
-    void load_file(std::string fp);
+        void save_file();
 
-    void save_file();
-
-    void run();
+        void run();
 };
 
 
