@@ -4,6 +4,7 @@
 #include <utility>
 #include "gui/sdl_exts.hpp"
 #include "app.hpp"
+#include "utils.hpp"
 
 const char *FONT_PATH = "./assets/JetBrainsMono-Regular.ttf";
 
@@ -212,8 +213,21 @@ void App::run() {
         SDL_SetRenderDrawColor(renderer, 37, 37, 37, 255);
         SDL_RenderClear(renderer);
 
+        // Render line number
+        int line_number_background_width = 34;
+        int line_number_fontsize = 20;
+        SDL_SetRenderDrawColor(renderer, 77, 77, 77, 255);
+        SDL_Rect line_number_background_rect = {0, 0, line_number_background_width, (int) height};
+        SDL_RenderFillRect(renderer, &line_number_background_rect);
+
+        for (int i = 0; i < 60; ++i) {
+            std::string line_number_text = integer_to_string_representation(i);
+            SDL_RenderDrawText(renderer, face, line_number_text, line_number_fontsize, (10 / line_number_text.length()), i * fontsize);
+        }
+
         // Render text
-        SDL_RenderDrawText(renderer, face, content, fontsize, 5, fontsize);
+        int text_offset = line_number_background_width + 5;
+        SDL_RenderDrawText(renderer, face, content, fontsize, text_offset, fontsize);
 
         // Render cursor
         if (display_cursor) {
@@ -238,7 +252,7 @@ void App::run() {
             // Padding
             offset_y += (int) (fontsize / 6);
 
-            SDL_Rect cursor_rect = {offset_x, offset_y, 2, (int) fontsize};
+            SDL_Rect cursor_rect = {text_offset + offset_x, offset_y, 2, (int) fontsize};
             SDL_RenderFillRect(renderer, &cursor_rect);
         }
 
