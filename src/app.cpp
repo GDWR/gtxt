@@ -23,7 +23,7 @@ AppInitCode App::init() {
             SDL_WINDOWPOS_UNDEFINED,
             width,
             height,
-            SDL_WINDOW_SHOWN);
+            SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == nullptr) {
         std::cout << "SDL_CreateWindow failed: " << SDL_GetError() << std::endl;
         return AppInitCode::Error;
@@ -82,6 +82,8 @@ void App::run() {
 
     bool running = true;
     while (running) {
+        // Sync window height and width
+        SDL_GetWindowSize(window, &width, &height);
 
         // Handle events
         SDL_Event event;
@@ -220,9 +222,13 @@ void App::run() {
         SDL_Rect line_number_background_rect = {0, 0, line_number_background_width, (int) height};
         SDL_RenderFillRect(renderer, &line_number_background_rect);
 
-        for (int i = 0; i < 60; ++i) {
+        // Render until off screen
+        int i = 1;
+        while ((i * fontsize) < height) {
             std::string line_number_text = integer_to_string_representation(i);
-            SDL_RenderDrawText(renderer, face, line_number_text, line_number_fontsize, (10 / line_number_text.length()), i * fontsize);
+            SDL_RenderDrawText(
+                    renderer, face, line_number_text, line_number_fontsize, (10 / line_number_text.length()), i * fontsize);
+            i++;
         }
 
         // Render text

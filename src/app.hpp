@@ -13,7 +13,7 @@ enum AppInitCode {
 
 class App {
     public:
-        uint width, height, cursor_position;
+        int width, height, cursor_position;
         std::string content, filepath;
 
         SDL_Renderer *renderer;
