@@ -11,7 +11,10 @@ void SDL_RenderDrawBitmap(SDL_Renderer *renderer, FT_Bitmap bitmap, int x, int y
 
     SDL_Color colors[256];
     for (int i = 0; i < 256; i++) {
-        colors[i].r = colors[i].g = colors[i].b = colors[i].a = i;
+        colors[i].r = 200;
+        colors[i].g = 200;
+        colors[i].b = 236;
+        colors[i].a = i;
     }
     SDL_SetPaletteColors(surface->format->palette, colors, 0, 256);
     SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
