@@ -1,6 +1,6 @@
 
-#ifndef GRIDE_SDL_EXTS_HPP
-#define GRIDE_SDL_EXTS_HPP
+#ifndef GTXT_SDL_EXTS_HPP
+#define GTXT_SDL_EXTS_HPP
 
 #include <SDL.h>
 #include <ft2build.h>

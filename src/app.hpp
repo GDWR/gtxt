@@ -1,6 +1,5 @@
-#ifndef GRED_APP_HPP
-#define GRED_APP_HPP
-
+#ifndef GTXT_APP_HPP
+#define GTXT_APP_HPP
 
 #include <string>
 #include <SDL.h>
@@ -37,4 +36,4 @@ public:
 };
 
 
-#endif //GRED_APP_HPP
+#endif //GTXT_APP_HPP
