@@ -4,7 +4,8 @@
 
 #include <string>
 #include <SDL.h>
-#include <freetype/freetype.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 enum AppInitCode {
     Ok = 0,

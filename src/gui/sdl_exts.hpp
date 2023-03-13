@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 #include <ft2build.h>
-#include "freetype/freetype.h"
+#include FT_FREETYPE_H
 #include <iostream>
 
 void SDL_RenderDrawChar(SDL_Renderer *renderer, FT_Face face, char character, int fontsize, int x, int y);
