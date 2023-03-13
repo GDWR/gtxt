@@ -17,9 +17,7 @@ int main(int argc, char *argv[]) {
     }
 
     app->load_file(argv[1]);
-    // Blocking, will run app until quit requested by client.
     app->run();
-    // Run cleanup steps
     app->deinit();
 
     return EXIT_SUCCESS;
