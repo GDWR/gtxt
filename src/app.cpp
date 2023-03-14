@@ -234,8 +234,8 @@ void App::run() {
         SDL_RenderClear(renderer);
 
         // Render line number
-        int line_number_background_width = 34;
-        int line_number_fontsize = 20;
+        int line_number_background_width = 36;
+        int line_number_fontsize = 16;
         SDL_SetRenderDrawColor(renderer, 77, 77, 77, 255);
         SDL_Rect line_number_background_rect = {0, 0, line_number_background_width, (int) height};
         SDL_RenderFillRect(renderer, &line_number_background_rect);
@@ -245,7 +245,12 @@ void App::run() {
         while ((i * fontsize) < height) {
             std::string line_number_text = to_string_repr(i);
             SDL_RenderDrawText(
-              renderer, face, line_number_text, line_number_fontsize, (10 / line_number_text.length()), i * fontsize);
+              renderer,
+              face,
+              line_number_text,
+              line_number_fontsize,
+              (line_number_background_width / 2) - ((line_number_text.length() * (line_number_fontsize * 0.6)) / 2),
+              i * fontsize);
             i++;
         }
 
