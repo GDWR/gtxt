@@ -4,7 +4,7 @@
 #include <string>
 #include <algorithm>
 
-std::string integer_to_string_representation(int integer) {
+std::string to_string_repr(int integer) {
     std::string output;
 
     while (true) {

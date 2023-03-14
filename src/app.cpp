@@ -244,7 +244,7 @@ void App::run() {
         // Render until off screen
         int i = 1;
         while ((i * fontsize) < height) {
-            std::string line_number_text = integer_to_string_representation(i);
+            std::string line_number_text = to_string_repr(i);
             SDL_RenderDrawText(
                     renderer, face, line_number_text, line_number_fontsize, (10 / line_number_text.length()), i * fontsize);
             i++;
