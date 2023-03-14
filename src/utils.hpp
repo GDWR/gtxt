@@ -1,8 +1,8 @@
 #ifndef GTXT_UTILS_HPP
 #define GTXT_UTILS_HPP
 
-#include <string>
 #include <algorithm>
+#include <string>
 
 std::string to_string_repr(int integer) {
     std::string output;
@@ -22,4 +22,4 @@ std::string to_string_repr(int integer) {
     return output;
 }
 
-#endif //GTXT_UTILS_HPP
+#endif // GTXT_UTILS_HPP

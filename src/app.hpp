@@ -1,15 +1,15 @@
 #ifndef GTXT_APP_HPP
 #define GTXT_APP_HPP
 
-#include <string>
 #include <SDL.h>
 #include <ft2build.h>
 #include <functional>
+#include <string>
 #include FT_FREETYPE_H
 
 enum AppInitCode {
-  Ok = 0,
-  Error = 1,
+    Ok = 0,
+    Error = 1,
 };
 
 class App {
@@ -43,4 +43,4 @@ class App {
     void quit();
 };
 
-#endif //GTXT_APP_HPP
+#endif // GTXT_APP_HPP

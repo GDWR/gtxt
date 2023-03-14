@@ -1,10 +1,10 @@
-#include <iostream>
+#include "app.hpp"
+#include "gui/sdl_exts.hpp"
+#include "utils.hpp"
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <utility>
-#include "gui/sdl_exts.hpp"
-#include "app.hpp"
-#include "utils.hpp"
 
 const char *FONT_PATH = "./assets/JetBrainsMono-Regular.ttf";
 
@@ -22,12 +22,13 @@ AppInitCode App::init() {
 
     // Create the window
     window = SDL_CreateWindow(
-      "gtxt",
-      SDL_WINDOWPOS_UNDEFINED,
-      SDL_WINDOWPOS_UNDEFINED,
-      width,
-      height,
-      SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+        "gtxt",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        width,
+        height,
+        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+    );
 
     if (window == nullptr) {
         std::cout << "SDL_CreateWindow failed: " << SDL_GetError() << std::endl;
@@ -37,7 +38,8 @@ AppInitCode App::init() {
     // Create the renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr) {
-        std::cout << "SDL_CreateRenderer failed: " << SDL_GetError() << std::endl;
+        std::cout << "SDL_CreateRenderer failed: " << SDL_GetError()
+                  << std::endl;
         return AppInitCode::Error;
     }
 
@@ -52,12 +54,19 @@ AppInitCode App::init() {
     // Create FreeType face
     error = FT_New_Face(library, FONT_PATH, 0, &face);
     if (error == FT_Err_Unknown_File_Format) {
-        fprintf(stderr, "error: the font file could be opened and read,"
-                        " but it appears that its font format is unsupported\n");
+        fprintf(
+            stderr,
+            "error: the font file could be opened and read,"
+            " but it appears that its font format is unsupported\n"
+        );
         return AppInitCode::Error;
     } else if (error) {
-        fprintf(stderr, "error: another error code (%d) means that the font "
-                        "file could not be opened or read, or that it is broken\n", error);
+        fprintf(
+            stderr,
+            "error: another error code (%d) means that the font "
+            "file could not be opened or read, or that it is broken\n",
+            error
+        );
         return AppInitCode::Error;
     }
 
@@ -81,11 +90,15 @@ void App::run() {
     this->running = true;
     uint fontsize = 24;
     bool display_cursor = false;
-    SDL_AddTimer(333, [](Uint32 interval, void *param) {
-      bool *boolean = static_cast<bool *>(param);
-      *boolean = !*boolean;
-      return interval;
-    }, &display_cursor);
+    SDL_AddTimer(
+        333,
+        [](Uint32 interval, void *param) {
+            bool *boolean = static_cast<bool *>(param);
+            *boolean = !*boolean;
+            return interval;
+        },
+        &display_cursor
+    );
 
     while (this->running) {
         // Throttle the event loop to lower CPU usage,
@@ -112,47 +125,47 @@ void App::run() {
                         key = toupper(key);
                     } else {
                         switch (key) {
-                            case '1':
-                                key = '!';
-                                break;
-                            case '2':
-                                key = '"';
-                                break;
-                            case '3':
-                                key = '3';
-                                break;
-                            case '4':
-                                key = '$';
-                                break;
-                            case '5':
-                                key = '%';
-                                break;
-                            case '6':
-                                key = '^';
-                                break;
-                            case '7':
-                                key = '&';
-                                break;
-                            case '8':
-                                key = '*';
-                                break;
-                            case '9':
-                                key = '(';
-                                break;
-                            case '0':
-                                key = ')';
-                                break;
-                            case '-':
-                                key = '_';
-                                break;
-                            case '=':
-                                key = '+';
-                                break;
-                            case ';':
-                                key = ':';
-                                break;
-                            default:
-                                break;
+                        case '1':
+                            key = '!';
+                            break;
+                        case '2':
+                            key = '"';
+                            break;
+                        case '3':
+                            key = '3';
+                            break;
+                        case '4':
+                            key = '$';
+                            break;
+                        case '5':
+                            key = '%';
+                            break;
+                        case '6':
+                            key = '^';
+                            break;
+                        case '7':
+                            key = '&';
+                            break;
+                        case '8':
+                            key = '*';
+                            break;
+                        case '9':
+                            key = '(';
+                            break;
+                        case '0':
+                            key = ')';
+                            break;
+                        case '-':
+                            key = '_';
+                            break;
+                        case '=':
+                            key = '+';
+                            break;
+                        case ';':
+                            key = ':';
+                            break;
+                        default:
+                            break;
                         }
                     }
                 } else if (event.key.keysym.mod & KMOD_CTRL) {
@@ -166,65 +179,65 @@ void App::run() {
 
                 int i;
                 switch (event.key.keysym.scancode) {
-                    case SDL_SCANCODE_Q:
-                        this->onPressQ();
-                        break;
-                    case SDL_SCANCODE_A...SDL_SCANCODE_P:
-                    case SDL_SCANCODE_R...SDL_SCANCODE_Z:
-                    case SDL_SCANCODE_1...SDL_SCANCODE_0:
-                    case SDL_SCANCODE_TAB...SDL_SCANCODE_SLASH:
-                        content.insert(cursor_position, &key);
+                case SDL_SCANCODE_Q:
+                    this->onPressQ();
+                    break;
+                case SDL_SCANCODE_A ... SDL_SCANCODE_P:
+                case SDL_SCANCODE_R ... SDL_SCANCODE_Z:
+                case SDL_SCANCODE_1 ... SDL_SCANCODE_0:
+                case SDL_SCANCODE_TAB ... SDL_SCANCODE_SLASH:
+                    content.insert(cursor_position, &key);
+                    cursor_position++;
+                    break;
+                case SDL_SCANCODE_RETURN:
+                case SDL_SCANCODE_RETURN2:
+                    content.insert(cursor_position, sizeof(char), '\n');
+                    cursor_position++;
+                    break;
+                case SDL_SCANCODE_BACKSPACE:
+                    if (content.length() != 0 && cursor_position != 0) {
+                        content.erase(cursor_position - 1, 1);
+                        cursor_position--;
+                    }
+                    break;
+                case SDL_SCANCODE_DELETE:
+                    if (content.length() != 0)
+                        content.erase(cursor_position, 1);
+                    break;
+                case SDL_SCANCODE_RIGHT:
+                    if (cursor_position != content.length())
                         cursor_position++;
+                    break;
+                case SDL_SCANCODE_LEFT:
+                    if (cursor_position != 0)
+                        cursor_position--;
+                    break;
+                case SDL_SCANCODE_UP:
+                    // Start of current line
+                    i = content.rfind('\n', cursor_position);
+                    if (i == -1) {
+                        cursor_position = 0;
                         break;
-                    case SDL_SCANCODE_RETURN:
-                    case SDL_SCANCODE_RETURN2:
-                        content.insert(cursor_position, sizeof(char), '\n');
-                        cursor_position++;
-                        break;
-                    case SDL_SCANCODE_BACKSPACE:
-                        if (content.length() != 0 && cursor_position != 0) {
-                            content.erase(cursor_position - 1, 1);
-                            cursor_position--;
-                        }
-                        break;
-                    case SDL_SCANCODE_DELETE:
-                        if (content.length() != 0)
-                            content.erase(cursor_position, 1);
-                        break;
-                    case SDL_SCANCODE_RIGHT:
-                        if (cursor_position != content.length())
-                            cursor_position++;
-                        break;
-                    case SDL_SCANCODE_LEFT:
-                        if (cursor_position != 0)
-                            cursor_position--;
-                        break;
-                    case SDL_SCANCODE_UP:
-                        // Start of current line
-                        i = content.rfind('\n', cursor_position);
-                        if (i == -1) {
-                            cursor_position = 0;
-                            break;
-                        }
+                    }
 
-                        i = content.rfind('\n', i - 1);
-                        if (i == -1) {
-                            cursor_position = 0;
-                            break;
-                        }
+                    i = content.rfind('\n', i - 1);
+                    if (i == -1) {
+                        cursor_position = 0;
+                        break;
+                    }
 
+                    cursor_position = i + 1;
+                    break;
+                case SDL_SCANCODE_DOWN:
+                    i = content.find('\n', cursor_position);
+                    if (i == -1) {
+                        cursor_position = content.length();
+                    } else {
                         cursor_position = i + 1;
-                        break;
-                    case SDL_SCANCODE_DOWN:
-                        i = content.find('\n', cursor_position);
-                        if (i == -1) {
-                            cursor_position = content.length();
-                        } else {
-                            cursor_position = i + 1;
-                        }
-                        break;
-                    default:
-                        break;
+                    }
+                    break;
+                default:
+                    break;
                 }
             }
         }
@@ -237,7 +250,8 @@ void App::run() {
         int line_number_background_width = 36;
         int line_number_fontsize = 16;
         SDL_SetRenderDrawColor(renderer, 77, 77, 77, 255);
-        SDL_Rect line_number_background_rect = {0, 0, line_number_background_width, (int) height};
+        SDL_Rect line_number_background_rect = {
+            0, 0, line_number_background_width, (int)height};
         SDL_RenderFillRect(renderer, &line_number_background_rect);
 
         // Render until off screen
@@ -245,23 +259,28 @@ void App::run() {
         while ((i * fontsize) < height) {
             std::string line_number_text = to_string_repr(i);
             SDL_RenderDrawText(
-              renderer,
-              face,
-              line_number_text,
-              line_number_fontsize,
-              (line_number_background_width / 2) - ((line_number_text.length() * (line_number_fontsize * 0.6)) / 2),
-              i * fontsize);
+                renderer,
+                face,
+                line_number_text,
+                line_number_fontsize,
+                (line_number_background_width / 2) -
+                    ((line_number_text.length() * (line_number_fontsize * 0.6)
+                     ) /
+                     2),
+                i * fontsize
+            );
             i++;
         }
 
         // Render text
         int text_offset = line_number_background_width + 5;
-        SDL_RenderDrawText(renderer, face, content, fontsize, text_offset, fontsize);
+        SDL_RenderDrawText(
+            renderer, face, content, fontsize, text_offset, fontsize
+        );
 
         // Render cursor
         if (display_cursor) {
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
 
             // Calculate position of cursor.
             int offset_x = 0;
@@ -275,13 +294,14 @@ void App::run() {
             }
 
             // Scale by fontsize.
-            offset_x *= (int) (fontsize / 1.6);
-            offset_y *= (int) (fontsize);
+            offset_x *= (int)(fontsize / 1.6);
+            offset_y *= (int)(fontsize);
 
             // Padding
-            offset_y += (int) (fontsize / 6);
+            offset_y += (int)(fontsize / 6);
 
-            SDL_Rect cursor_rect = {text_offset + offset_x, offset_y, 2, (int) fontsize};
+            SDL_Rect cursor_rect = {
+                text_offset + offset_x, offset_y, 2, (int)fontsize};
             SDL_RenderFillRect(renderer, &cursor_rect);
         }
 

@@ -1,0 +1,6 @@
+Language: Cpp
+IndentWidth: 4
+AlignAfterOpenBracket: BlockIndent
+AllowShortFunctionsOnASingleLine: None
+BinPackArguments: false
+BinPackParameters: false
