@@ -89,6 +89,11 @@ void App::run() {
     }, &display_cursor);
 
     while (this->running) {
+        // Throttle the event loop to lower CPU usage,
+        //  this can be dynamic in the future?
+        //  or even a blocking poll for a render event?
+        SDL_Delay(50);
+
         // Sync window height and width
         SDL_GetWindowSize(window, &width, &height);
 
