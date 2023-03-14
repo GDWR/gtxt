@@ -1,9 +1,9 @@
 #include "sdl_exts.hpp"
 
-
 void SDL_RenderDrawBitmap(SDL_Renderer *renderer, FT_Bitmap bitmap, int x, int y) {
     SDL_Surface *surface = SDL_CreateRGBSurfaceFrom(
-            bitmap.buffer, bitmap.width, bitmap.rows, 8, bitmap.pitch, 0, 0, 0, 0xFF);
+      bitmap.buffer, bitmap.width, bitmap.rows, 8, bitmap.pitch, 0, 0, 0, 0xFF);
+
     if (surface == nullptr) {
         std::cout << "error: Couldn't make glyph surface - " << SDL_GetError() << std::endl;
         exit(-1);
@@ -57,7 +57,7 @@ void SDL_RenderDrawText(SDL_Renderer *renderer, FT_Face face, std::string text, 
     uint offset_y = 0;
     uint offset_step = fontsize / 1.6;
 
-    for (auto c: text) {
+    for (auto c : text) {
         switch (c) { // Handle some special cases like spaces and returns.
             case ' ':
                 offset_x += offset_step;

@@ -22,5 +22,4 @@ std::string to_string_repr(int integer) {
     return output;
 }
 
-
 #endif //GTXT_UTILS_HPP

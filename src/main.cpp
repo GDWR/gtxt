@@ -1,7 +1,6 @@
 #include <iostream>
 #include "app.hpp"
 
-
 int main(int argc, char *argv[]) {
 
     if (argc != 2) {

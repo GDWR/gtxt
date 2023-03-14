@@ -8,39 +8,39 @@
 #include FT_FREETYPE_H
 
 enum AppInitCode {
-    Ok = 0,
-    Error = 1,
+  Ok = 0,
+  Error = 1,
 };
 
 class App {
+  private:
     bool running;
 
-    public:
-        int width, height, cursor_position;
-        std::string content, filepath;
+  public:
+    int width, height, cursor_position;
+    std::string content, filepath;
 
-        SDL_Renderer *renderer;
-        SDL_Window *window;
+    SDL_Renderer *renderer;
+    SDL_Window *window;
 
-        FT_Library library;
-        FT_Face face;
+    FT_Library library;
+    FT_Face face;
 
-        std::function<void()> onPressQ;
+    std::function<void()> onPressQ;
 
-        App(int, int);
+    App(int, int);
 
-        AppInitCode init();
+    AppInitCode init();
 
-        void deinit();
+    void deinit();
 
-        void load_file(std::string fp);
+    void load_file(std::string fp);
 
-        void save_file();
+    void save_file();
 
-        void run();
+    void run();
 
-        void quit();
+    void quit();
 };
-
 
 #endif //GTXT_APP_HPP

@@ -22,12 +22,13 @@ AppInitCode App::init() {
 
     // Create the window
     window = SDL_CreateWindow(
-            "gtxt",
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
-            width,
-            height,
-            SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+      "gtxt",
+      SDL_WINDOWPOS_UNDEFINED,
+      SDL_WINDOWPOS_UNDEFINED,
+      width,
+      height,
+      SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+
     if (window == nullptr) {
         std::cout << "SDL_CreateWindow failed: " << SDL_GetError() << std::endl;
         return AppInitCode::Error;
@@ -60,7 +61,6 @@ AppInitCode App::init() {
         return AppInitCode::Error;
     }
 
-
     this->onPressQ = [this]() { this->quit(); };
 
     return AppInitCode::Ok;
@@ -77,15 +77,14 @@ void App::deinit() {
     FT_Done_FreeType(library);
 }
 
-
 void App::run() {
     this->running = true;
     uint fontsize = 24;
     bool display_cursor = false;
     SDL_AddTimer(333, [](Uint32 interval, void *param) {
-        bool *boolean = static_cast<bool *>(param);
-        *boolean = !*boolean;
-        return interval;
+      bool *boolean = static_cast<bool *>(param);
+      *boolean = !*boolean;
+      return interval;
     }, &display_cursor);
 
     while (this->running) {
@@ -246,7 +245,7 @@ void App::run() {
         while ((i * fontsize) < height) {
             std::string line_number_text = to_string_repr(i);
             SDL_RenderDrawText(
-                    renderer, face, line_number_text, line_number_fontsize, (10 / line_number_text.length()), i * fontsize);
+              renderer, face, line_number_text, line_number_fontsize, (10 / line_number_text.length()), i * fontsize);
             i++;
         }
 
@@ -262,7 +261,7 @@ void App::run() {
             // Calculate position of cursor.
             int offset_x = 0;
             int offset_y = 0;
-            for (char c: content.substr(0, cursor_position)) {
+            for (char c : content.substr(0, cursor_position)) {
                 offset_x++;
                 if (c == '\n') {
                     offset_x = 0;
