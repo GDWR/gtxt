@@ -1,6 +1,4 @@
-
-#ifndef GTXT_SDL_EXTS_HPP
-#define GTXT_SDL_EXTS_HPP
+#pragma once
 
 #include <SDL.h>
 #include <ft2build.h>
@@ -24,5 +22,3 @@ void SDL_RenderDrawText(
     int x,
     int y
 );
-
-#endif

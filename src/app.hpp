@@ -1,5 +1,4 @@
-#ifndef GTXT_APP_HPP
-#define GTXT_APP_HPP
+#pragma once
 
 #include <SDL.h>
 #include <ft2build.h>
@@ -42,5 +41,3 @@ class App {
 
     void quit();
 };
-
-#endif // GTXT_APP_HPP

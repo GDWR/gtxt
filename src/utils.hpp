@@ -1,5 +1,4 @@
-#ifndef GTXT_UTILS_HPP
-#define GTXT_UTILS_HPP
+#pragma once
 
 #include <algorithm>
 #include <string>
@@ -21,5 +20,3 @@ std::string to_string_repr(int integer) {
     std::reverse(output.begin(), output.end());
     return output;
 }
-
-#endif // GTXT_UTILS_HPP
